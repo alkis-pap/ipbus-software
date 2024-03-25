@@ -485,6 +485,8 @@ namespace uhal
 
   ValHeader  Node::write ( const uint32_t& aValue ) const
   {
+    log ( Debug() , "Node::write:\t" , Quote ( this->getPath() ), ": ",  aValue );
+
     if ( mPermission & defs::WRITE )
     {
       if ( mMask == defs::NOMASK )
@@ -511,6 +513,9 @@ namespace uhal
 
   ValHeader  Node::writeBlock ( const std::vector< uint32_t >& aValues ) const // , const defs::BlockReadWriteMode& aMode )
   {
+
+    log ( Debug() , "Node::writeBlock:\t" , Quote ( this->getPath() ), "[0:" , aValues.size(), "] = ", aValues );
+
     if ( ( mMode == defs::SINGLE ) && ( aValues.size() != 1 ) ) //We allow the user to call a bulk access of size=1 to a single register
     {
       exception::BulkTransferOnSingleRegister lExc;
@@ -542,6 +547,8 @@ namespace uhal
 
   ValHeader  Node::writeBlockOffset ( const std::vector< uint32_t >& aValues , const uint32_t& aOffset ) const // , const defs::BlockReadWriteMode& aMode )
   {
+    log ( Debug() , "Node::writeBlockOffset:\t" , Quote ( this->getPath() ), "[", aOffset, ":", aValues.size(), "] = ", aValues );
+
     if ( mMode == defs::NON_INCREMENTAL )
     {
       exception::BulkTransferOffsetRequestedForFifo lExc;
@@ -580,6 +587,8 @@ namespace uhal
 
   ValWord< uint32_t > Node::read() const
   {
+    log ( Debug() , "Node::read:\t" , Quote ( this->getPath() ) );
+
     if ( mPermission & defs::READ )
     {
       if ( mMask == defs::NOMASK )
@@ -601,6 +610,8 @@ namespace uhal
 
   ValVector< uint32_t > Node::readBlock ( const uint32_t& aSize ) const //, const defs::BlockReadWriteMode& aMode )
   {
+    log ( Debug() , "Node::readBlock:\t" , Quote ( this->getPath() ), "[0:" , aSize, "]" );
+
     if ( ( mMode == defs::SINGLE ) && ( aSize != 1 ) ) //We allow the user to call a bulk access of size=1 to a single register
     {
       exception::BulkTransferOnSingleRegister lExc;
@@ -632,6 +643,8 @@ namespace uhal
 
   ValVector< uint32_t > Node::readBlockOffset ( const uint32_t& aSize , const uint32_t& aOffset ) const //, const defs::BlockReadWriteMode& aMode )
   {
+    log ( Debug() , "Node::writeBlockOffset:\t" , Quote ( this->getPath() ), "[", aOffset, ":", aSize, "]" );
+
     if ( mMode == defs::NON_INCREMENTAL )
     {
       exception::BulkTransferOffsetRequestedForFifo lExc;
