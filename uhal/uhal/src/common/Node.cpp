@@ -513,8 +513,10 @@ namespace uhal
 
   ValHeader  Node::writeBlock ( const std::vector< uint32_t >& aValues ) const // , const defs::BlockReadWriteMode& aMode )
   {
-
-    log ( Debug() , "Node::writeBlock:\t" , Quote ( this->getPath() ), "[0:" , aValues.size(), "] = ", aValues );
+    std::string dataStr = "";
+    for (const auto value : aValues)
+      dataStr += std::to_string(value) + ' ';
+    log ( Debug() , "Node::writeBlock:\t" , Quote ( this->getPath() ), "[0:" , aValues.size(), "] = ", dataStr );
 
     if ( ( mMode == defs::SINGLE ) && ( aValues.size() != 1 ) ) //We allow the user to call a bulk access of size=1 to a single register
     {
@@ -547,7 +549,11 @@ namespace uhal
 
   ValHeader  Node::writeBlockOffset ( const std::vector< uint32_t >& aValues , const uint32_t& aOffset ) const // , const defs::BlockReadWriteMode& aMode )
   {
-    log ( Debug() , "Node::writeBlockOffset:\t" , Quote ( this->getPath() ), "[", aOffset, ":", aValues.size(), "] = ", aValues );
+    std::string dataStr = "";
+    for (const auto value : aValues)
+      dataStr += std::to_string(value) + ' ';
+
+    log ( Debug() , "Node::writeBlockOffset:\t" , Quote ( this->getPath() ), "[", aOffset, ":", aValues.size(), "] = ", dataStr );
 
     if ( mMode == defs::NON_INCREMENTAL )
     {
